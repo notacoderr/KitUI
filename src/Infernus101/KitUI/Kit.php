@@ -98,8 +98,8 @@ class Kit{
     	if(isset($this->data["money"])){
 	    EconomyAPI::getInstance()->reduceMoney($player, $this->data["money"]);
 	}
-	if(isset($this->data["gem"])){
-	    $this->pl->getServer()->getPluginManager()->getPlugin("CoreX2")->data->takeGem($player, $this->data["money"]);
+	if(isset($this->data["gems"])){
+	    $this->pl->getServer()->getPluginManager()->getPlugin("CoreX2")->data->takeGem($player, $this->data["gems"]);
 	}
         $this->pl->kitused[strtolower($player->getName())] = $this;
 
