@@ -13,8 +13,6 @@ use onebone\economyapi\EconomyAPI;
 
 class KitInfo extends Window {
 	
-	private $corex = $this->pl->getServer()->getPluginManager()->getPlugin("CoreX2");
-	
 	public function process(): void {
 		$info = "";
 		if(isset($this->pl->id[strtolower($this->player->getName())]["kit"])){
@@ -75,6 +73,7 @@ class KitInfo extends Window {
 				}
 			}
 			if(isset($kits->data["gems"])){
+				$corex = $this->pl->getServer()->getPluginManager()->getPlugin("CoreX2");
 				$gems = $kits->data["gems"];
 				if($this->corex->data->getVal($this->player, "gems") < $gems){
 					$error = $this->pl->language->getTranslation("cant-afford-gems", $name, $gems);
