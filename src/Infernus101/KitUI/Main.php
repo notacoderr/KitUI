@@ -29,23 +29,23 @@ class Main extends PluginBase implements Listener {
       @mkdir($this->getDataFolder()."timer/");
       $this->getServer()->getLogger()->notice("[KitUI] Enabled! - By Infernus101");
       $this->configFixer();
-      $files = array("kits.yml","config.yml");
+      $files = array("collections.yml","config.yml");
       foreach($files as $file){
       if(!file_exists($this->getDataFolder() . $file)){
       @mkdir($this->getDataFolder());
       file_put_contents($this->getDataFolder() . $file, $this->getResource($file));
       }
       }
-      $this->kit = new Config($this->getDataFolder() . "kits.yml", Config::YAML);
+      $this->kit = new Config($this->getDataFolder() . "collections.yml", Config::YAML);
       $this->config = new Config($this->getDataFolder() . "config.yml", Config::YAML);
       $this->language = new LangManager($this);
       $this->getServer()->getPluginManager()->registerEvents(new PlayerEvents($this), $this);
       $this->getScheduler()->scheduleDelayedRepeatingTask(new CoolDownTask($this), 1200, 1200);
       $this->piggyEnchants = $this->getServer()->getPluginManager()->getPlugin("PiggyCustomEnchants");
 	if($this->piggyEnchants !== null){
-            $this->getServer()->getLogger()->info(TextFormat::GREEN . "[KitUI] Using PiggyCustomEnchants!");
+            $this->getServer()->getLogger()->info(TextFormat::GREEN . " Linked with PiggyCustomEnchants!");
         }
-      $allKits = yaml_parse_file($this->getDataFolder()."kits.yml");
+      $allKits = yaml_parse_file($this->getDataFolder()."collections.yml");
       foreach($allKits as $name => $data){
         $this->kits[$name] = new Kit($this, $data, $name);
       }
@@ -64,7 +64,7 @@ class Main extends PluginBase implements Listener {
 		  return true;
 	  }
 	  switch(strtolower($cmd->getName())){
-            case "kit":
+            case "mstore":
 			if(!$sender->hasPermission("kit.command")){
 				$sender->sendMessage(TextFormat::RED."> You don't have permission to use this command!");
 				return false;
@@ -73,7 +73,7 @@ class Main extends PluginBase implements Listener {
 				$sender->sendMessage(TextFormat::GREEN."About:\nKit UI by Infernus101! github.com/Infernus101/KitUI\n".TextFormat::AQUA."Servers - FallenTech.tk | CounterTech.tk 19132");
 				return false;
 			}
-                $handler = new Handler();
+                		$handler = new Handler();
 				$packet = new ModalFormRequestPacket();
 				$packet->formId = $handler->getWindowIdFor(Handler::KIT_MAIN_MENU);
 				$packet->formData = $handler->getWindowJson(Handler::KIT_MAIN_MENU, $this, $sender);
@@ -84,8 +84,8 @@ class Main extends PluginBase implements Listener {
 	}
 	
     private function configFixer(){
-          $this->saveResource("kits.yml");
-          $allKits = yaml_parse_file($this->getDataFolder()."kits.yml");
+          $this->saveResource("collections.yml");
+          $allKits = yaml_parse_file($this->getDataFolder()."collections.yml");
           $this->fixConfig($allKits);
           foreach($allKits as $name => $data){
               $this->kits[$name] = new Kit($this, $data, $name);
