@@ -67,6 +67,7 @@ testkit2:
   kit-name: "§ctest2"
 
   money: 250
+  gems: 999
   
   image-url: ""
 
